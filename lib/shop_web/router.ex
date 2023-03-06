@@ -14,10 +14,10 @@ defmodule ShopWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", ShopWeb do
-    pipe_through :browser
-
-    get "/", PageController, :index
+  scope "/api/graphql" do
+    pipe_through :api
+    get "/", Absinthe.Plug.GraphiQL, schema: ShopWeb.Schema, interface: :playground
+    post "/", Absinthe.Plug, schema: ShopWeb.Schema
   end
 
   # Other scopes may use custom stacks.

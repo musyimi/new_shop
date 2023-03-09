@@ -18,7 +18,18 @@ defmodule Shop.Auth do
 
   """
   def list_users do
-    Repo.all(User)
+    Repo.all(from(u in User, select: %{
+      id: u.id,
+      email: u.email,
+      first_name: u.first_name,
+      last_name: u.last_name,
+      phone_number: u.phone_number,
+      inserted_at: u.inserted_at,
+      updated_at: u.updated_at
+
+    },
+    order_by: [desc: u.inserted_at]
+    ))
   end
 
   @doc """
